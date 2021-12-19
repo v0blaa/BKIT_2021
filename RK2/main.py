@@ -117,14 +117,16 @@ def task3(many_to_many):
     return res3
 
 
-def relations_creation():
+def relations_one_to_many():
 
     # Соединение данных один-ко-многим с помощью кортежа
     one_to_many = [(h.name, h.cost, s.name)
                    for s in streets
                    for h in houses
                    if h.streetID == s.id]
+    return one_to_many
 
+def relations_many_to_many():
     # Соединение данных многие-ко-многим с помощью кортежа
     many_to_many_temp = [(s.name, sh.streetID, sh.houseID)
                          for s in streets
@@ -134,12 +136,12 @@ def relations_creation():
     many_to_many = [(h.name, h.cost, streetName)
                     for streetName, streetID, houseID in many_to_many_temp
                     for h in houses if h.id == houseID]
-
-    return (one_to_many, many_to_many)
+    return  many_to_many
 
 
 if __name__ == '__main__':
-    relations = relations_creation()
-    print(task1(relations[0]))
-    print(task2(relations[0]))
-    print(task3(relations[1]))
+    one_to_many = relations_one_to_many()
+    many_to_many = relations_many_to_many()
+    print(task1(one_to_many))
+    print(task2(one_to_many))
+    print(task3(many_to_many))
